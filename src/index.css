@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(134, 150, 160, 0.25);
+    border-radius: 9999px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(134, 150, 160, 0.45);
+  }
+
+  /* WhatsApp Doodle Background Pattern */
+  .wa-chat-bg-dark {
+    background-color: #0b141a;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 0),
+      url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-8l-4 4v-4a4 4 0 0 1-4-4v-8zm60 40a6 6 0 1 0 0-12 6 6 0 0 0 0 12zm25-35c2-2 5-2 7 0s2 5 0 7l-7 7-7-7c-2-2-2-5 0-7s5-2 7 0l0 0zM15 85h10v10H15zM85 85a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-50-5l4-8 4 8z' fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+  }
+
+  .wa-chat-bg-light {
+    background-color: #efeae2;
+    background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 0),
+      url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 20a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4h-8l-4 4v-4a4 4 0 0 1-4-4v-8zm60 40a6 6 0 1 0 0-12 6 6 0 0 0 0 12zm25-35c2-2 5-2 7 0s2 5 0 7l-7 7-7-7c-2-2-2-5 0-7s5-2 7 0l0 0zM15 85h10v10H15zM85 85a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm-50-5l4-8 4 8z' fill='%23000000' fill-opacity='0.045' fill-rule='evenodd'/%3E%3C/svg%3E");
+  }
+}
+
+html, body, #root {
+  height: 100%;
+  height: 100dvh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+

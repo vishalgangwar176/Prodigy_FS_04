@@ -1,0 +1,8 @@
+{
+  "name": "PulseChat - Real-Time Collaboration & Messaging",
+  "description": "Production-grade real-time chat application with Firestore sync, group rooms, direct messaging, presence indicators, file sharing, and rich micro-interactions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

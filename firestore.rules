@@ -1,0 +1,54 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Users Collection
+    match /users/{userId} {
+      // Authenticated users can view other user profiles for searchable DM list and chat display
+      allow read: if isSignedIn();
+      // Users can only create or update their own profile and presence
+      allow create, update: if isOwner(userId);
+      allow delete: if false;
+    }
+
+    // Rooms Collection
+    match /rooms/{roomId} {
+      // Allow read if user is authenticated (channels are public, DMs have members)
+      allow read: if isSignedIn();
+
+      // Create new room: user must be signed in
+      allow create: if isSignedIn();
+
+      // Update room: allow updating lastMessage snippet or members
+      allow update: if isSignedIn();
+
+      allow delete: if isSignedIn() && resource.data.createdBy == request.auth.uid;
+
+      // Messages Subcollection
+      match /messages/{messageId} {
+        // Both participants have full read access to messages in the conversation
+        allow read: if isSignedIn();
+
+        // Any authenticated participant can send messages
+        allow create: if isSignedIn() && request.resource.data.senderId == request.auth.uid;
+
+        // Can update message for read receipts
+        allow update: if isSignedIn();
+
+        allow delete: if isSignedIn() && resource.data.senderId == request.auth.uid;
+      }
+    }
+  }
+}

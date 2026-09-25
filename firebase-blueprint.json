@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Public user profile and presence state",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "displayName": { "type": "string", "maxLength": 80 },
+        "email": { "type": "string", "maxLength": 120 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "statusText": { "type": "string", "maxLength": 150 },
+        "isOnline": { "type": "boolean" },
+        "lastSeen": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "displayName", "email"]
+    },
+    "Room": {
+      "title": "Room",
+      "description": "Public room or direct message conversation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "type": { "type": "string", "enum": ["channel", "direct"] },
+        "name": { "type": "string", "maxLength": 80 },
+        "description": { "type": "string", "maxLength": 240 },
+        "icon": { "type": "string", "maxLength": 64 },
+        "createdBy": { "type": "string", "maxLength": 128 },
+        "members": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" },
+        "lastMessageSnippet": { "type": "string", "maxLength": 200 },
+        "lastMessageAt": { "type": "string" }
+      },
+      "required": ["id", "type", "members", "createdBy"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "Message within a room or direct conversation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "roomId": { "type": "string", "maxLength": 128 },
+        "senderId": { "type": "string", "maxLength": 128 },
+        "senderName": { "type": "string", "maxLength": 80 },
+        "senderAvatar": { "type": "string", "maxLength": 500 },
+        "text": { "type": "string", "maxLength": 4000 },
+        "attachment": { "type": "object" },
+        "readBy": { "type": "array" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "roomId", "senderId", "senderName", "text"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles and presence"
+    },
+    "/rooms/{roomId}": {
+      "schema": { "$ref": "#/entities/Room" },
+      "description": "Chat rooms and direct conversations"
+    },
+    "/rooms/{roomId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Messages belonging to a room"
+    }
+  }
+}
